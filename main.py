@@ -1,23 +1,26 @@
+import os
 from fastapi import FastAPI
 from pydantic import BaseModel
-from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
+from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 
-# Initialize FastAPI
 app = FastAPI()
 
-# Load model from Hugging Face Hub
+# Load your token from environment
+hf_token = os.getenv("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")
+
+# Your model name
 MODEL_NAME = "neuraxcompany/gpt2-botfolio"
 
-tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-model = AutoModelForCausalLM.from_pretrained(MODEL_NAME)
-
+# Load tokenizer and model with token
+tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, token=hf_token)
+model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, token=hf_token)
 generator = pipeline(
     "text-generation",
     model=model,
     tokenizer=tokenizer
 )
 
-# Request schema
+# Define request schema
 class GenerateRequest(BaseModel):
     prompt: str
     max_length: int = 150
