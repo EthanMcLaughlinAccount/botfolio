@@ -6,7 +6,7 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 app = FastAPI()
 
 # Load your token from environment
-hf_token = os.getenv("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")
+hf_token = os.getenv("HUGGINGFACE_HUB_TOKEN")
 
 # Your model name
 MODEL_NAME = "neuraxcompany/gpt2-botfolio"
