@@ -5,16 +5,14 @@ from transformers import AutoTokenizer, AutoModelForCausalLM, pipeline
 
 app = FastAPI()
 
+# Load HF token
 hf_token = os.getenv("HUGGINGFACE_HUB_TOKEN")
 MODEL_NAME = "neuraxcompany/gpt2-botfolio"
 
+# Load model and tokenizer
 tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME, token=hf_token)
 model = AutoModelForCausalLM.from_pretrained(MODEL_NAME, token=hf_token)
-generator = pipeline(
-    "text-generation",
-    model=model,
-    tokenizer=tokenizer
-)
+generator = pipeline("text-generation", model=model, tokenizer=tokenizer)
 
 class GenerateRequest(BaseModel):
     prompt: str
